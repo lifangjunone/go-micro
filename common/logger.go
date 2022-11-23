@@ -7,6 +7,10 @@ import (
 	"path"
 )
 
+var (
+	LoggerObj *Logger
+)
+
 type LoggerOutMode int32
 
 const (
