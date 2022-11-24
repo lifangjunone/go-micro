@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	_ "github.com/lifangjunone/go-micro/apps/service_registry"
 	"github.com/lifangjunone/go-micro/common"
 	"github.com/lifangjunone/go-micro/conf"
 	"github.com/lifangjunone/go-micro/protocol"
@@ -16,11 +17,14 @@ import (
 
 type service struct {
 	http *protocol.HTTPService
+	grpc *protocol.GRPCService
 	log  *go_logger.Logger
 }
 
 func (s *service) Start() error {
-	return s.http.Start()
+	//go s.grpc.Start()
+	//return s.http.Start()
+	return s.grpc.Start()
 }
 
 func (s *service) waitSign(sign chan os.Signal) {
@@ -28,14 +32,18 @@ func (s *service) waitSign(sign chan os.Signal) {
 		fmt.Println(sg)
 		err := s.http.Stop()
 		s.log.Error(err.Error())
+		err = s.grpc.Stop()
+		s.log.Error(err.Error())
 	}
 	return
 }
 
 func newService() (*service, error) {
 	http := protocol.NewHTTPService()
+	grpc := protocol.NewGRPCService()
 	svr := &service{
 		http: http,
+		grpc: grpc,
 		log:  common.LoggerObj.LoggerObj,
 	}
 	return svr, nil
@@ -76,7 +84,6 @@ var runServerCmd = &cobra.Command{
 		common.LoggerObj = logger
 
 		// init global all server[grpc and http]
-		// TODO
 		err := service_center.InitAllService()
 		if err != nil {
 			return err
@@ -102,4 +109,8 @@ var runServerCmd = &cobra.Command{
 		}
 		return nil
 	},
+}
+
+func init() {
+	RootCmd.AddCommand(runServerCmd)
 }

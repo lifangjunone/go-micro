@@ -5,8 +5,8 @@ go 1.19
 require (
 	github.com/BurntSushi/toml v1.2.1
 	github.com/caarlos0/env/v6 v6.10.1
-	github.com/emicklei/go-restful v2.16.0+incompatible
 	github.com/emicklei/go-restful/v3 v3.10.1
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/phachon/go-logger v0.0.0-20191215032019-86e4227f71ea
 	github.com/spf13/cobra v1.6.1
 	google.golang.org/grpc v1.51.0

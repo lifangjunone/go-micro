@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"sync"
 	"time"
 )
@@ -116,6 +117,3 @@ func newConfig() *Config {
 		MySQL: newDefaultMysql(),
 	}
 }
-
-
-

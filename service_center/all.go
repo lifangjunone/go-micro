@@ -9,5 +9,11 @@ func InitAllService() error {
 		}
 	}
 	// init grpc service
+	for _, srv := range grpcServices {
+		err := srv.Config()
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

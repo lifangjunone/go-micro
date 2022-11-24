@@ -10,8 +10,6 @@ service Service {
 
 
 message CreateCategoryRequest {
-  // @gotags: json:"create_by"
-  string create_at = 1;
   // @gotags: json:"name"
   string name = 2;
   // @gotags: json:"key_picture"
@@ -22,13 +20,11 @@ message Category {
   // @gotags: json:"id"
   int64 id = 1;
   // @gotags: json:"name"
-  string name = 2;
-  // @gotags: json:"key_picture"
-  string key_Picture = 3;
   // @gotags: json:"create_at"
   int64 create_at = 4;
   // @gotags: json:"update_at"
   int64 update_at = 5;
+  CreateCategoryRequest data = 6;
 }
 
 message QueryCategoryRequest {

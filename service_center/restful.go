@@ -26,8 +26,8 @@ func RegistryRestfulService(service RestfulService) {
 	}
 }
 
-// RegisteredServices  已经注册的服务
-func RegisteredServices() (services []string) {
+// RegisteredRestfulServices  已经注册的服务
+func RegisteredRestfulServices() (services []string) {
 	for k := range restfulServices {
 		services = append(services, k)
 	}
