@@ -30,7 +30,7 @@ func (i *impl) query(query *category.QueryCategoryRequest) (*category.CategorySe
 	data := category.NewCategorySet()
 	for rows.Next() {
 		item := category.NewDefaultCategory()
-		err = rows.Scan(&item.CreateAt, &item.UpdateAt, &item.Id, &item.Data.Name, &item.Data.KeyPicture)
+		err = rows.Scan(&item.Id, &item.CreateAt, &item.UpdateAt, &item.Data.Name, &item.Data.KeyPicture)
 		if err != nil {
 			i.log.Error(err.Error())
 			continue
