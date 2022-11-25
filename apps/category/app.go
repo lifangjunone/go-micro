@@ -4,7 +4,7 @@ import "time"
 
 const (
 	AppName = "category"
-	Version = "v1.0.0"
+	Version = "v1"
 )
 
 func NewCategorySet() *CategorySet {
@@ -27,6 +27,9 @@ func NewDefaultCategory() *Category {
 	}
 }
 
+func NewDefaultCreateCategoryRequest() *CreateCategoryRequest {
+	return &CreateCategoryRequest{}
+}
 func (c *CategorySet) Add(item *Category) {
 	c.Items = append(c.Items, item)
 }

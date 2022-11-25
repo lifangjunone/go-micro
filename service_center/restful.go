@@ -47,6 +47,7 @@ func RegistryAllRestfulServices(pathPrefix string, root *restful.Container) {
 	for _, srv := range restfulServices {
 		pathPrefix = strings.TrimSuffix(pathPrefix, "/")
 		ws := new(restful.WebService)
+		fmt.Println(fmt.Sprintf("%s/%s/%s", pathPrefix, srv.Version(), srv.Name()))
 		ws.Path(fmt.Sprintf("%s/%s/%s", pathPrefix, srv.Version(), srv.Name())).
 			Consumes(restful.MIME_JSON, restful.MIME_XML).
 			Produces(restful.MIME_JSON, restful.MIME_XML)

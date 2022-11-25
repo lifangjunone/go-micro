@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	_ "github.com/lifangjunone/go-micro/apps/service_registry"
-	"github.com/lifangjunone/go-micro/common"
+	"github.com/lifangjunone/go-micro/common/custom_logger"
 	"github.com/lifangjunone/go-micro/conf"
 	"github.com/lifangjunone/go-micro/protocol"
 	"github.com/lifangjunone/go-micro/service_center"
@@ -22,18 +22,15 @@ type service struct {
 }
 
 func (s *service) Start() error {
-	//go s.grpc.Start()
-	//return s.http.Start()
-	return s.grpc.Start()
+	go s.grpc.Start()
+	return s.http.Start()
 }
 
 func (s *service) waitSign(sign chan os.Signal) {
 	for sg := range sign {
 		fmt.Println(sg)
-		err := s.http.Stop()
-		s.log.Error(err.Error())
-		err = s.grpc.Stop()
-		s.log.Error(err.Error())
+		_ = s.http.Stop()
+		_ = s.grpc.Stop()
 	}
 	return
 }
@@ -44,7 +41,7 @@ func newService() (*service, error) {
 	svr := &service{
 		http: http,
 		grpc: grpc,
-		log:  common.LoggerObj.LoggerObj,
+		log:  custom_logger.CustomLog.LoggerObj,
 	}
 	return svr, nil
 }
@@ -79,9 +76,9 @@ var runServerCmd = &cobra.Command{
 		}
 
 		// init global logger
-		logger := common.NewLogger(common.LoggerConsole, conf.ServiceName)
+		logger := custom_logger.NewLogger(custom_logger.LoggerConsole, conf.ServiceName)
 		logger.Config()
-		common.LoggerObj = logger
+		custom_logger.CustomLog = logger
 
 		// init global all server[grpc and http]
 		err := service_center.InitAllService()

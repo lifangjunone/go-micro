@@ -1,5 +1,5 @@
 [app]
-name = "cmdb"
+name = "go-micro"
 
 [app.http]
 host = "127.0.0.1"

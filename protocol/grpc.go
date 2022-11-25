@@ -1,7 +1,7 @@
 package protocol
 
 import (
-	"github.com/lifangjunone/go-micro/common"
+	"github.com/lifangjunone/go-micro/common/custom_logger"
 	"github.com/lifangjunone/go-micro/conf"
 	"github.com/lifangjunone/go-micro/service_center"
 	"github.com/phachon/go-logger"
@@ -18,7 +18,7 @@ type GRPCService struct {
 func NewGRPCService() *GRPCService {
 	return &GRPCService{
 		svr: grpc.NewServer(),
-		l:   common.LoggerObj.LoggerObj,
+		l:   custom_logger.CustomLog.LoggerObj,
 		c:   conf.GetConfig(),
 	}
 }

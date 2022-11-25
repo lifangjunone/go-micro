@@ -1,11 +1,11 @@
-package common
+package custom_logger
 
 import (
 	"github.com/phachon/go-logger"
 )
 
 var (
-	LoggerObj *Logger
+	CustomLog *CustomLogger
 )
 
 type LoggerOutMode int32
@@ -17,20 +17,20 @@ const (
 	LoggerFileName    = "file"
 )
 
-type Logger struct {
+type CustomLogger struct {
 	OutMode   LoggerOutMode
 	FileName  string
 	LoggerObj *go_logger.Logger
 }
 
-func NewLogger(outMode LoggerOutMode, fileName string) *Logger {
-	return &Logger{
+func NewLogger(outMode LoggerOutMode, fileName string) *CustomLogger {
+	return &CustomLogger{
 		OutMode:  outMode,
 		FileName: fileName,
 	}
 }
 
-func (l *Logger) Config() {
+func (l *CustomLogger) Config() {
 	logger := go_logger.NewLogger()
 	//switch l.OutMode {
 	//case LoggerConsole:

@@ -1,6 +1,7 @@
 package impl
 
 import (
+	"database/sql"
 	"github.com/lifangjunone/go-micro/apps/category"
 )
 
@@ -10,12 +11,18 @@ func (i *impl) save(ins *category.Category) error {
 	if err != nil {
 		return err
 	}
-	stmt.Exec(ins.Data.Name, ins.Data.KeyPicture)
+	stmt.Exec(ins.CreateAt, ins.UpdateAt, ins.Data.Name, ins.Data.KeyPicture)
 	return nil
 }
 
 func (i *impl) query(query *category.QueryCategoryRequest) (*category.CategorySet, error) {
-	rows, err := i.db.Query(QuerySql, query.Keyword)
+	rows := &sql.Rows{}
+	var err error
+	if query.Keyword == "" {
+		rows, err = i.db.Query(QuerySqlNotParam)
+	} else {
+		rows, err = i.db.Query(QuerySql, query.Keyword)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +30,11 @@ func (i *impl) query(query *category.QueryCategoryRequest) (*category.CategorySe
 	data := category.NewCategorySet()
 	for rows.Next() {
 		item := category.NewDefaultCategory()
-		rows.Scan(item.Id, item.Data.Name, item.Data.KeyPicture)
+		err = rows.Scan(&item.CreateAt, &item.UpdateAt, &item.Id, &item.Data.Name, &item.Data.KeyPicture)
+		if err != nil {
+			i.log.Error(err.Error())
+			continue
+		}
 		data.Add(item)
 	}
 	return data, err

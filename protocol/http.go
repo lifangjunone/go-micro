@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/emicklei/go-restful/v3"
-	"github.com/lifangjunone/go-micro/common"
+	"github.com/lifangjunone/go-micro/common/custom_logger"
 	"github.com/lifangjunone/go-micro/conf"
 	"github.com/lifangjunone/go-micro/service_center"
 	"github.com/phachon/go-logger"
@@ -40,7 +40,7 @@ func NewHTTPService() *HTTPService {
 	return &HTTPService{
 		r:      r,
 		server: server,
-		l:      common.LoggerObj.LoggerObj,
+		l:      custom_logger.CustomLog.LoggerObj,
 		c:      conf.GetConfig(),
 	}
 }

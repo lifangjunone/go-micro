@@ -3,7 +3,7 @@ package impl
 import (
 	"database/sql"
 	"github.com/lifangjunone/go-micro/apps/category"
-	"github.com/lifangjunone/go-micro/common"
+	"github.com/lifangjunone/go-micro/common/custom_logger"
 	"github.com/lifangjunone/go-micro/conf"
 	"github.com/lifangjunone/go-micro/service_center"
 	"github.com/phachon/go-logger"
@@ -25,7 +25,7 @@ func (i *impl) Name() string {
 }
 
 func (i *impl) Config() error {
-	log := common.NewLogger(common.LoggerConsole, i.Name())
+	log := custom_logger.NewLogger(custom_logger.LoggerConsole, i.Name())
 	log.Config()
 	i.log = log.LoggerObj
 	db, err := conf.GetConfig().MySQL.GetDB()
